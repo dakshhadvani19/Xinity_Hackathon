@@ -1,6 +1,7 @@
 import Hero from '../components/Hero';
 import EventCarousel from '../components/EventCarousel';
 import InfoSection from '../components/InfoSection';
+import ChallengeIllustration from '../components/ChallengeIllustration';
 
 export const metadata = {
   title: 'XINITY Hackathon — Build. Pitch. Conquer.',
@@ -41,6 +42,7 @@ export default function Home() {
         title="The Challenge"
         description="Select from three interstellar tracks: Build for the Future, Web3 Integrations, or the AI Frontier. Architect a full-stack solution that demonstrates high impact, flawless usability, and exceptional brand identity. Your code is just the beginning — the Pitch seals your legacy."
         align="right"
+        illustration={<ChallengeIllustration />}
       />
 
       <section
@@ -57,14 +59,11 @@ export default function Home() {
         }}
       >
         <div style={{ maxWidth: '560px' }}>
-          {/* <p style={{ fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.1em', color: 'var(--accent-color)', textTransform: 'uppercase', marginBottom: '20px' }}>
-            Limited Spots
-          </p> */}
           <h2
             className="heading-display"
             style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', marginBottom: '1.25rem', color: 'var(--text-color)', lineHeight: 1.1 }}
           >
-            Ready to Build ?
+            Ready to <span style={{ color: 'var(--accent-color)' }}>Build ?</span>
           </h2>
           <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '480px', margin: '0 auto 2.5rem auto', lineHeight: 1.65 }}>
             Secure your spot in the most cinematic hackathon of the year. The frontier is waiting.

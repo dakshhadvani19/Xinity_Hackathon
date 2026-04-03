@@ -34,7 +34,7 @@ export default function Header() {
               <Link href="/#challenge" className={styles.navLink}>Challenge</Link>
             </li>
             <li>
-              <Link href="/#register" className={styles.navLink}>Register</Link>
+              <Link href="/#contact" className={styles.navLink}>Contact</Link>
             </li>
           </ul>
         </nav>

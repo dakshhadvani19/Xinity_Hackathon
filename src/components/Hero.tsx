@@ -10,8 +10,8 @@ const FULL_TYPE_TEXT = PLAIN_PART + ACCENT_PART;
 const SECOND_LINE =
   'XINITY is our student-led hackathon platform, evolving the builder mindset into the agent-first era.';
 
-const SPEED_LINE1 = 90; // ms per character — first line (slower)
-const SPEED_LINE2 = 65; // ms per character — second line
+const SPEED_LINE1 = 120; // ms per character — first line (slower)
+const SPEED_LINE2 = 45; // ms per character — second line
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -51,7 +51,7 @@ export default function Hero() {
         clearInterval(interval);
         setTypingPhase('done');
       }
-    }, SPEED);
+    }, SPEED_LINE2);
     return () => clearInterval(interval);
   }, [typingPhase]);
 
@@ -194,10 +194,10 @@ export default function Hero() {
       <canvas ref={canvasRef} className={styles.particleCanvas} />
 
       {/* Top brand label */}
-      <div className={styles.brandLabel}>
+      {/* <div className={styles.brandLabel}>
         <span className={styles.brandX}>X</span>
         <span className={styles.brandName}>XINITY</span>
-      </div>
+      </div> */}
 
       {/* Hero headline — typed character by character */}
       <div className={styles.heroContent}>
@@ -222,13 +222,6 @@ export default function Hero() {
           {typingPhase === 'line2' && (
             <span className={styles.cursor} style={{ opacity: cursorVisible ? 1 : 0 }}>|</span>
           )}
-        </p>
-      </div>
-
-      {/* Subtitle + CTA — fade in after both lines finish */}
-      <div className={`${styles.ctaArea} ${typingPhase === 'done' ? styles.ctaVisible : ''}`}>
-        <p className={styles.heroSubtitle}>
-          Build. Pitch. Conquer. 48 hours to change everything.
         </p>
       </div>
 

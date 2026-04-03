@@ -10,9 +10,10 @@ interface InfoSectionProps {
   description: React.ReactNode;
   align?: 'left' | 'right';
   children?: React.ReactNode;
+  illustration?: React.ReactNode;
 }
 
-export default function InfoSection({ id, title, description, align = 'left', children }: InfoSectionProps) {
+export default function InfoSection({ id, title, description, align = 'left', children, illustration }: InfoSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-15%' });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -25,24 +26,36 @@ export default function InfoSection({ id, title, description, align = 'left', ch
   return (
     <section id={id} className={`section ${styles.sectionWrapper}`}>
       <div className={`container ${styles.container}`} ref={ref}>
-        <motion.div
-          className={`${styles.content} ${align === 'right' ? styles.contentRight : ''}`}
-          initial={{ opacity: 0, x: align === 'left' ? -40 : 40 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: align === 'left' ? -40 : 40 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          onMouseMove={handleMouseMove}
-          style={{ '--mouse-x': `${mousePos.x}px`, '--mouse-y': `${mousePos.y}px` } as React.CSSProperties}
-        >
-          <h2 className={`heading-display ${styles.title}`}>{title}</h2>
+        <div className={`${styles.row} ${illustration ? styles.rowWithImage : ''}`}>
+          {illustration && (
+            <motion.div
+              className={styles.illustrationWrap}
+              initial={{ opacity: 0, x: -30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {illustration}
+            </motion.div>
+          )}
           <motion.div
-            className={styles.divider}
-            initial={{ width: 0 }}
-            animate={isInView ? { width: 48 } : { width: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
-          <p className={styles.description}>{description}</p>
-          {children}
-        </motion.div>
+            className={`${styles.content} ${align === 'right' ? styles.contentRight : ''}`}
+            initial={{ opacity: 0, x: align === 'left' ? -40 : 40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: align === 'left' ? -40 : 40 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            onMouseMove={handleMouseMove}
+            style={{ '--mouse-x': `${mousePos.x}px`, '--mouse-y': `${mousePos.y}px` } as React.CSSProperties}
+          >
+            <h2 className={`heading-display ${styles.title}`}>{title}</h2>
+            <motion.div
+              className={styles.divider}
+              initial={{ width: 0 }}
+              animate={isInView ? { width: 48 } : { width: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            />
+            <p className={styles.description}>{description}</p>
+            {children}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

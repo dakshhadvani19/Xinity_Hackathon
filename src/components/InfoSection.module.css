@@ -14,6 +14,22 @@
   flex-direction: column;
 }
 
+.row {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowWithImage {
+  flex-direction: row;
+  align-items: center;
+  gap: 3rem;
+}
+
+.illustrationWrap {
+  flex: 0 0 320px;
+  max-width: 320px;
+}
+
 .content {
   max-width: 640px;
   background: #fff;
@@ -30,7 +46,10 @@
 .content::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border-radius: 20px;
   background: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 196, 180, 0.07), transparent 70%);
   pointer-events: none;
@@ -89,15 +108,28 @@
   .contentRight {
     align-self: center;
   }
+
+  .rowWithImage {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .illustrationWrap {
+    flex: none;
+    max-width: 280px;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .content {
     padding: 2rem;
   }
+
   .title {
     font-size: 1.8rem;
   }
+
   .description {
     font-size: 0.95rem;
   }

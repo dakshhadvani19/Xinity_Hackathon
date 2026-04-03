@@ -113,6 +113,13 @@
   text-decoration: underline;
 }
 
+.error {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
 .footer {
   margin-top: 1.75rem;
   text-align: center;
