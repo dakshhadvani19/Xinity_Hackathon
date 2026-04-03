@@ -1,0 +1,163 @@
+.carouselSection {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.sectionInner {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 4rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #fff, #a0a0a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.carouselContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.cardsWrapper {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+}
+
+.card {
+  flex: 1;
+  min-width: 0;
+  height: 440px;
+  border-radius: 20px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  /* disable CSS hover transform — framer-motion handles all transforms */
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: none;
+}
+
+.cardContent {
+  position: relative;
+  z-index: 2;
+}
+
+.icon {
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.cardDesc {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.navButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.navButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 900px) {
+  .sectionTitle {
+    font-size: 2.5rem;
+  }
+
+  .card {
+    height: 360px;
+    padding: 1.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1.4rem;
+  }
+
+  .cardDesc {
+    font-size: 0.9rem;
+  }
+
+  .navButton {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+
+  .cardsWrapper {
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sectionInner {
+    width: 95%;
+  }
+
+  .card {
+    height: 300px;
+    padding: 1.25rem;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cardDesc {
+    font-size: 0.8rem;
+  }
+}
