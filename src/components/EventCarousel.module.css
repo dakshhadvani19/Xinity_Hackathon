@@ -1,7 +1,10 @@
 .carouselSection {
-  min-height: 100vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
+  background: var(--bg-subtle);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .sectionInner {
@@ -10,135 +13,188 @@
 }
 
 .sectionTitle {
-  font-size: 4rem;
+  font-size: clamp(2rem, 4vw, 3.2rem);
   text-align: center;
   margin-bottom: 3rem;
-  background: linear-gradient(135deg, #fff, #a0a0a0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-color);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-.carouselContainer {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  width: 100%;
-}
-
+/* All 3 cards side-by-side, top-aligned so center offset is visible */
 .cardsWrapper {
   display: flex;
-  gap: 1.5rem;
-  flex: 1;
-  min-width: 0;
-  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  align-items: flex-start;
+  /* vertical padding gives the floating animation room without clipping */
+  padding: 20px 0 60px;
 }
 
+/* Base card */
 .card {
   flex: 1;
   min-width: 0;
-  height: 440px;
-  border-radius: 20px;
+  height: 380px;
+  border-radius: 24px;
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   overflow: hidden;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   position: relative;
-  /* disable CSS hover transform — framer-motion handles all transforms */
-  transition: box-shadow 0.3s ease;
+  will-change: transform;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-.card:hover {
-  transform: none;
+/* Center card (The Reward) — taller and pushed lower; side cards share the same baseline */
+.cardCenter {
+  height: 500px;
+  margin-top: 55px;
 }
 
-.cardContent {
+/* Prize list inside the Reward card */
+.prizeList {
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.8rem;
 }
 
-.icon {
-  margin-bottom: 1.5rem;
-  opacity: 0.9;
-}
-
-.cardTitle {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
-}
-
-.cardDesc {
+.prizeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
   font-size: 1.1rem;
-  opacity: 0.8;
-  line-height: 1.6;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
 }
 
+/* Center card (4 items) — slightly tighter to keep ~22% empty space */
+.cardCenter .prizeList {
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardCenter .prizeItem {
+  font-size: 1.1rem;
+  line-height: 1.45;
+  padding: 0.85rem 1rem;
+}
+
+.prizeIcon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.85;
+}
+
+/* Large watermark icon */
+.bgIconWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -55%);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bgIcon {
+  display: block;
+}
+
+/* Ambient glow overlay */
 .glow {
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
   z-index: 1;
   pointer-events: none;
 }
 
-.navButton {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  width: 56px;
-  height: 56px;
-  min-width: 56px;
-  border-radius: 50%;
+/* Bottom row: title left, play button right */
+.cardBottom {
+  position: relative;
+  z-index: 2;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-  flex-shrink: 0;
-  z-index: 20;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
 }
 
-.navButton:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+.cardText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 0.95rem;
+  opacity: 0.75;
+  line-height: 1.4;
+  margin: 0;
+}
+
 
 @media (max-width: 900px) {
   .sectionTitle {
-    font-size: 2.5rem;
-  }
-
-  .card {
-    height: 360px;
-    padding: 1.5rem;
-  }
-
-  .cardTitle {
-    font-size: 1.4rem;
-  }
-
-  .cardDesc {
-    font-size: 0.9rem;
-  }
-
-  .navButton {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
+    font-size: 2rem;
   }
 
   .cardsWrapper {
-    gap: 0.75rem;
+    gap: 1rem;
+  }
+
+  .card {
+    height: 320px;
+    padding: 1.75rem;
+  }
+
+  .cardCenter {
+    height: 420px;
+    margin-top: 40px;
+  }
+
+  .cardTitle {
+    font-size: 1.7rem;
+  }
+
+  .cardDesc {
+    font-size: 0.85rem;
+  }
+
+  .prizeItem {
+    font-size: 0.82rem;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .cardCenter .prizeItem {
+    font-size: 0.78rem;
+    padding: 0.6rem 0.8rem;
   }
 }
 
@@ -147,17 +203,44 @@
     width: 95%;
   }
 
+  .cardsWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 0 30px;
+    gap: 1.25rem;
+  }
+
+  /* Stack vertically on mobile — reset the center offset and size */
+  .cardCenter {
+    height: 340px;
+    margin-top: 0;
+  }
+
   .card {
-    height: 300px;
+    height: 260px;
     padding: 1.25rem;
   }
 
   .cardTitle {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
   }
 
   .cardDesc {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+  }
+
+  .prizeList {
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+  }
+
+  .prizeItem {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .cardCenter .prizeItem {
+    font-size: 0.72rem;
+    padding: 0.45rem 0.65rem;
   }
 }

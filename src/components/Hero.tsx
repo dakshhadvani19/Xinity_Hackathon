@@ -1,97 +1,241 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Hero.module.css';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+const PLAIN_PART = 'Experience liftoff with the ';
+const ACCENT_PART = 'next-generation hackathon';
+const FULL_TYPE_TEXT = PLAIN_PART + ACCENT_PART;
+
+const SECOND_LINE =
+  'XINITY is our student-led hackathon platform, evolving the builder mindset into the agent-first era.';
+
+const SPEED_LINE1 = 90; // ms per character — first line (slower)
+const SPEED_LINE2 = 65; // ms per character — second line
 
 export default function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const leftXRef = useRef<HTMLDivElement>(null);
-  const rightXRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [charIndex1, setCharIndex1] = useState(0);
+  const [charIndex2, setCharIndex2] = useState(0);
+  const [typingPhase, setTypingPhase] = useState<'line1' | 'line2' | 'done'>('line1');
+  const [cursorVisible, setCursorVisible] = useState(true);
+  const mouseRef = useRef({ x: -9999, y: -9999 });
 
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 1000], [0, 300]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
-
+  // ── Line 1 typewriter ──────────────────────────────────────────────────────
   useEffect(() => {
-    if (!leftXRef.current || !rightXRef.current || !containerRef.current) return;
+    let i = 0;
+    const timer = setTimeout(() => {
+      const interval = setInterval(() => {
+        if (i < FULL_TYPE_TEXT.length) {
+          i++;
+          setCharIndex1(i);
+        } else {
+          clearInterval(interval);
+          setTimeout(() => setTypingPhase('line2'), 400);
+        }
+      }, SPEED_LINE1);
+      return () => clearInterval(interval);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
-    let ctx = gsap.context(() => {
-      // The giant stroke 'X' splits and flies apart
-      gsap.to(leftXRef.current, {
-        x: '-20vw',
-        y: '-10vh',
-        rotation: 0,
-        opacity: 0,
-        ease: 'power3.inOut',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
+  // ── Line 2 typewriter — starts once phase flips to 'line2' ────────────────
+  useEffect(() => {
+    if (typingPhase !== 'line2') return;
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < SECOND_LINE.length) {
+        i++;
+        setCharIndex2(i);
+      } else {
+        clearInterval(interval);
+        setTypingPhase('done');
+      }
+    }, SPEED);
+    return () => clearInterval(interval);
+  }, [typingPhase]);
+
+  // ── Blinking cursor — disappears when both lines are done ─────────────────
+  useEffect(() => {
+    if (typingPhase === 'done') { setCursorVisible(false); return; }
+    const blink = setInterval(() => setCursorVisible(v => !v), 530);
+    return () => clearInterval(blink);
+  }, [typingPhase]);
+
+  // ── Mouse-tracking floating particle dots ──────────────────────────────────
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animId: number;
+    let width = 0;
+    let height = 0;
+
+    const PARTICLE_COUNT = 160;
+    interface Particle {
+      x: number; y: number;
+      vx: number; vy: number;
+      radius: number;
+      color: string;
+      alpha: number;
+    }
+
+    const COLORS = [
+      'rgba(0, 196, 180,',
+      'rgba(0, 210, 195,',
+      'rgba(0, 178, 164,',
+      'rgba(0, 196, 180,',
+      'rgba(0, 168, 155,',
+      'rgba(0, 150, 136,',
+      'rgba(0, 220, 205,',
+      'rgba(0, 140, 128,',
+      'rgba(20, 200, 185,',
+      'rgba(0, 190, 175,',
+    ];
+
+    let particles: Particle[] = [];
+
+    const resize = () => {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    };
+
+    const initParticles = () => {
+      particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 2.5 + 1,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        alpha: Math.random() * 0.5 + 0.15,
+      }));
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      const mouse = mouseRef.current;
+
+      particles.forEach(p => {
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120 && dist > 0) {
+          const force = (120 - dist) / 120 * 0.5;
+          p.vx -= (dx / dist) * force;
+          p.vy -= (dy / dist) * force;
+        }
+
+        p.vx *= 0.98;
+        p.vy *= 0.98;
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `${p.color}${p.alpha})`;
+        ctx.fill();
       });
 
-      gsap.to(rightXRef.current, {
-        x: '20vw',
-        y: '10vh',
-        rotation: 0,
-        opacity: 0,
-        ease: 'power3.inOut',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
-      });
-    }, containerRef);
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 80) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0, 196, 180, ${0.08 * (1 - dist / 80)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
 
-    return () => ctx.revert();
+      animId = requestAnimationFrame(draw);
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+    const onMouseLeave = () => { mouseRef.current = { x: -9999, y: -9999 }; };
+
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    canvas.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('mouseleave', onMouseLeave);
+
+    resize();
+    initParticles();
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
+      canvas.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mousemove', onMouseMove);
+      canvas.removeEventListener('mouseleave', onMouseLeave);
+    };
   }, []);
 
   return (
-    <section ref={containerRef} className={styles.heroSection}>
-      <div className="star-layer"></div>
-      
-      <motion.div 
-        className={styles.content}
-        style={{ y: y1, opacity }}
-      >
-        <div className={styles.titleContainer}>
-          <motion.div 
-            className={styles.xWrapper}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.5, ease: 'easeOut', delay: 0.5 }}
-          >
-            <div ref={leftXRef} className={`${styles.xStroke} ${styles.xLeftStroke}`}></div>
-            <div ref={rightXRef} className={`${styles.xStroke} ${styles.xRightStroke}`}></div>
-          </motion.div>
-          <motion.div 
-            className={styles.inity}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.5, ease: 'easeOut', delay: 0.5 }}
-          >
-            INITY
-          </motion.div>
-        </div>
-        <motion.p 
-          className={styles.tagline}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-        >
-          <i>Beyond the code. Into the infinite.</i>
-        </motion.p>
-      </motion.div>
+    <section className={styles.heroSection}>
+      {/* Floating particle canvas */}
+      <canvas ref={canvasRef} className={styles.particleCanvas} />
+
+      {/* Top brand label */}
+      <div className={styles.brandLabel}>
+        <span className={styles.brandX}>X</span>
+        <span className={styles.brandName}>XINITY</span>
+      </div>
+
+      {/* Hero headline — typed character by character */}
+      <div className={styles.heroContent}>
+        <h1 className={styles.heroHeadline}>
+          {FULL_TYPE_TEXT.slice(0, Math.min(charIndex1, PLAIN_PART.length))}
+          {charIndex1 >= PLAIN_PART.length && <br />}
+          {charIndex1 > PLAIN_PART.length && (
+            <em className={styles.headlineAccent}>
+              {ACCENT_PART.slice(0, charIndex1 - PLAIN_PART.length)}
+            </em>
+          )}
+          {typingPhase === 'line1' && (
+            <span className={styles.cursor} style={{ opacity: cursorVisible ? 1 : 0 }}>|</span>
+          )}
+        </h1>
+      </div>
+
+      {/* Second line — also typed, cursor follows here during line2 phase */}
+      <div className={styles.pixelSection}>
+        <p className={styles.pixelText}>
+          {SECOND_LINE.slice(0, charIndex2)}
+          {typingPhase === 'line2' && (
+            <span className={styles.cursor} style={{ opacity: cursorVisible ? 1 : 0 }}>|</span>
+          )}
+        </p>
+      </div>
+
+      {/* Subtitle + CTA — fade in after both lines finish */}
+      <div className={`${styles.ctaArea} ${typingPhase === 'done' ? styles.ctaVisible : ''}`}>
+        <p className={styles.heroSubtitle}>
+          Build. Pitch. Conquer. 48 hours to change everything.
+        </p>
+      </div>
+
+      {/* Scroll hint */}
+      <div className={styles.scrollHint}>
+        <div className={styles.scrollDot} />
+      </div>
     </section>
   );
 }

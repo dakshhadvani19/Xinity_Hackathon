@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -10,21 +9,17 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-      className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
-    >
+    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <div className={styles.logo}>
+          <div className={styles.logoMark}>X</div>
           <Link href="/">
             <span className={styles.logoText}>XINITY</span>
           </Link>
@@ -39,7 +34,7 @@ export default function Header() {
               <Link href="/#challenge" className={styles.navLink}>Challenge</Link>
             </li>
             <li>
-              <Link href="/register" className={styles.navLink}>Register</Link>
+              <Link href="/#register" className={styles.navLink}>Register</Link>
             </li>
           </ul>
         </nav>
@@ -48,8 +43,11 @@ export default function Header() {
           <Link href="/login" className="btn-secondary">
             Log In
           </Link>
+          <Link href="/register" className="btn-primary">
+            Register →
+          </Link>
         </div>
       </div>
-    </motion.header>
+    </header>
   );
 }

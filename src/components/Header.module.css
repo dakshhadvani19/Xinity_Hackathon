@@ -4,17 +4,18 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  padding: 24px 0;
+  padding: 20px 0;
   transition: all 0.3s ease;
+  background: transparent;
 }
 
 .scrolled {
-  padding: 16px 0;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  padding: 14px 0;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
 }
 
 .container {
@@ -26,16 +27,33 @@
   align-items: center;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logoMark {
+  width: 24px;
+  height: 24px;
+  background: var(--accent-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
 .logoText {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: 2px;
-  color: #fff;
+  letter-spacing: 0.06em;
+  color: var(--text-color);
   text-decoration: none;
-  background: linear-gradient(135deg, #fff, #888);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .nav {
@@ -50,23 +68,24 @@
 
 .navList {
   display: flex;
-  gap: 32px;
+  gap: 36px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .navLink {
-  color: var(--text-color);
+  color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
+  letter-spacing: 0.01em;
 }
 
 .navLink:hover {
-  color: #fff;
+  color: var(--text-color);
 }
 
 .navLink::after {
@@ -77,9 +96,22 @@
   bottom: -4px;
   left: 0;
   background-color: var(--accent-color);
-  transition: width 0.3s ease;
+  transition: width 0.25s ease;
+  border-radius: 1px;
 }
 
 .navLink:hover::after {
   width: 100%;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Override .btn-secondary for nav context */
+.actions :global(.btn-secondary) {
+  padding: 8px 20px;
+  font-size: 0.88rem;
 }

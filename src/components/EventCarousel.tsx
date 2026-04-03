@@ -1,118 +1,115 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, LayoutGroup } from 'framer-motion';
-import { Code, Mic, Trophy, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import {
+  Code, Mic, Trophy,
+  Rocket, Globe, Users, Award,
+  Palette, Sparkles, Target, Zap,
+} from 'lucide-react';
 import styles from './EventCarousel.module.css';
 
-const CAROUSEL_ITEMS = [
+const CARDS = [
   {
     id: 1,
-    title: 'The Build { }',
-    description: '3D Code-block cluster. Architect scalable solutions.',
+    title: 'The Build',
+    subtitle: 'Architect scalable solutions in 48 hours.',
     icon: Code,
-    gradient: 'linear-gradient(135deg, #1e3a8a, #3b82f6)',
+    gradient: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%)',
+    flexGrow: 1.2,
+    points: [
+      { icon: Palette,  text: 'Full freedom to leverage any UI framework or design system' },
+      { icon: Sparkles, text: 'Deliver a polished, visually compelling final product' },
+    ],
   },
   {
     id: 2,
-    title: 'The Pitch ▲',
-    description: 'Stage + Spotlight silhouette. Present your vision.',
-    icon: Mic,
-    gradient: 'linear-gradient(135deg, #7e22ce, #d946ef)',
+    title: 'The Reward',
+    subtitle: 'Everything you earn when you conquer.',
+    icon: Trophy,
+    gradient: 'linear-gradient(135deg, #047857 0%, #059669 60%, #10b981 100%)',
+    flexGrow: 1.7,
+    points: [
+      { icon: Rocket, text: 'Official spot on the XINITY Community Tech Team' },
+      { icon: Globe,  text: 'Get opportunity to showcase your project live on the XINITY platform' },
+      { icon: Users,  text: 'Recognition across the entire XINITY community' },
+      { icon: Award,  text: 'A certificate of achievement in your name' },
+    ],
   },
   {
     id: 3,
-    title: 'The Reward ★',
-    description: 'Holographic Trophy. Glory and infinite prizes.',
-    icon: Trophy,
-    gradient: 'linear-gradient(135deg, #047857, #10b981)',
+    title: 'The Pitch',
+    subtitle: 'Present your vision to the judges.',
+    icon: Mic,
+    gradient: 'linear-gradient(135deg, #7e22ce 0%, #a855f7 60%, #d946ef 100%)',
+    flexGrow: 1.2,
+    points: [
+      { icon: Target, text: 'Present your solution directly before a live judging panel' },
+      { icon: Zap,    text: 'Drive maximum impact through confident, concise delivery' },
+    ],
   },
 ];
 
-const total = CAROUSEL_ITEMS.length;
+// Unique, non-matching float paths per position
+const FLOAT_PATHS = [
+  { y: [0, -18, -5, 14,  4, -11,  0], x: [0,  6, -3, -7,  4,  2, 0], yDur: 7.2, xDur: 9.4  },
+  { y: [0, -10,  9, -7, 16,  -8,  0], x: [0, -5,  7,  2, -6,  4, 0], yDur: 9.5, xDur: 11.8 },
+  { y: [0,  12, -16, 6,  -4, 11,  0], x: [0,  5, -2, -7,  6, -4, 0], yDur: 6.3, xDur: 8.1  },
+];
 
 export default function EventCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % total);
-  const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + total) % total);
-
-  // Always render as [leftCard, activeCard, rightCard]
-  const leftIndex = (currentIndex - 1 + total) % total;
-  const rightIndex = (currentIndex + 1) % total;
-
-  const orderedItems = [
-    { item: CAROUSEL_ITEMS[leftIndex], isActive: false },
-    { item: CAROUSEL_ITEMS[currentIndex], isActive: true },
-    { item: CAROUSEL_ITEMS[rightIndex], isActive: false },
-  ];
-
   return (
     <section className={`section ${styles.carouselSection}`}>
       <div className={styles.sectionInner}>
         <h2 className={`heading-display ${styles.sectionTitle}`}>Event Showcase</h2>
 
-        <div className={styles.carouselContainer}>
-          <button
-            className={styles.navButton}
-            onClick={prevSlide}
-            aria-label="Previous slide"
-          >
-            <ChevronLeft size={28} />
-          </button>
+        <div className={styles.cardsWrapper}>
+          {CARDS.map((card, idx) => {
+            const float = FLOAT_PATHS[idx];
+            const isCenter = idx === 1;
+            return (
+              <motion.div
+                key={card.id}
+                className={`${styles.card} ${isCenter ? styles.cardCenter : ''}`}
+                animate={{ y: float.y, x: float.x }}
+                transition={{
+                  y: { duration: float.yDur, repeat: Infinity, ease: 'easeInOut', repeatType: 'loop' },
+                  x: { duration: float.xDur, repeat: Infinity, ease: 'easeInOut', repeatType: 'loop' },
+                }}
+                style={{ backgroundImage: card.gradient, flexGrow: card.flexGrow }}
+              >
+                {/* Watermark icon */}
+                <div className={styles.bgIconWrap}>
+                  <card.icon size={180} className={styles.bgIcon} />
+                </div>
 
-          <LayoutGroup id="carousel">
-            <div className={styles.cardsWrapper}>
-              {orderedItems.map(({ item, isActive }) => (
+                {/* Ambient glow */}
                 <motion.div
-                  key={item.id}
-                  layout
-                  className={styles.card}
-                  animate={{
-                    opacity: isActive ? 1 : 0.3,
-                    scale: isActive ? 1 : 0.86,
-                    filter: isActive ? 'blur(0px)' : 'blur(3px)',
-                  }}
-                  transition={{
-                    layout: { type: 'spring', stiffness: 280, damping: 28 },
-                    opacity: { duration: 0.35 },
-                    scale: { duration: 0.35 },
-                    filter: { duration: 0.35 },
-                  }}
-                  style={{
-                    backgroundImage: item.gradient,
-                    boxShadow: isActive
-                      ? '0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.15)'
-                      : '0 4px 24px rgba(0,0,0,0.4)',
-                  }}
-                >
-                  <div className={styles.cardContent}>
-                    <item.icon size={60} className={styles.icon} />
-                    <h3 className={styles.cardTitle}>{item.title}</h3>
-                    <p className={styles.cardDesc}>{item.description}</p>
+                  className={styles.glow}
+                  animate={{ opacity: [0.35, 0.75, 0.35] }}
+                  transition={{ duration: 3 + idx * 0.7, repeat: Infinity, ease: 'easeInOut' }}
+                />
+
+                {/* Points list */}
+                <div className={styles.prizeList}>
+                  {card.points.map((point, i) => (
+                    <div key={i} className={styles.prizeItem}>
+                      <point.icon size={14} className={styles.prizeIcon} />
+                      <span>{point.text}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom row */}
+                <div className={styles.cardBottom}>
+                  <div className={styles.cardText}>
+                    <h3 className={styles.cardTitle}>{card.title}</h3>
+                    <p className={styles.cardDesc}>{card.subtitle}</p>
                   </div>
-
-                  {isActive && (
-                    <motion.div
-                      className={styles.glow}
-                      animate={{ opacity: [0.4, 0.9, 0.4] }}
-                      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </LayoutGroup>
-
-          <button
-            className={styles.navButton}
-            onClick={nextSlide}
-            aria-label="Next slide"
-          >
-            <ChevronRight size={28} />
-          </button>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-
       </div>
     </section>
   );

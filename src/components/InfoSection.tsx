@@ -14,7 +14,7 @@ interface InfoSectionProps {
 
 export default function InfoSection({ id, title, description, align = 'left', children }: InfoSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-20%' });
+  const isInView = useInView(ref, { once: true, margin: '-15%' });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -24,26 +24,22 @@ export default function InfoSection({ id, title, description, align = 'left', ch
 
   return (
     <section id={id} className={`section ${styles.sectionWrapper}`}>
-      <div className={`container ${styles.container}`} ref={ref} style={{ perspective: '1200px' }}>
-        <motion.div 
+      <div className={`container ${styles.container}`} ref={ref}>
+        <motion.div
           className={`${styles.content} ${align === 'right' ? styles.contentRight : ''}`}
-          initial={{ opacity: 0, x: align === 'left' ? -60 : 60, scale: 0.95, rotateY: align === 'left' ? -10 : 10, y: 0 }}
-          animate={isInView ? { opacity: 1, x: 0, scale: 1, rotateY: 0, y: [0, -10, 0] } : { opacity: 0, x: align === 'left' ? -60 : 60, scale: 0.95, rotateY: align === 'left' ? -10 : 10, y: 0 }}
-          transition={{ 
-            type: 'spring', stiffness: 120, damping: 20,
-            y: { duration: 6, repeat: Infinity, ease: 'easeInOut' }
-          }}
-          whileHover={{ scale: 1.02 }}
+          initial={{ opacity: 0, x: align === 'left' ? -40 : 40 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: align === 'left' ? -40 : 40 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           onMouseMove={handleMouseMove}
           style={{ '--mouse-x': `${mousePos.x}px`, '--mouse-y': `${mousePos.y}px` } as React.CSSProperties}
         >
           <h2 className={`heading-display ${styles.title}`}>{title}</h2>
-          <motion.div 
+          <motion.div
             className={styles.divider}
             initial={{ width: 0 }}
-            animate={isInView ? { width: 60 } : { width: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          ></motion.div>
+            animate={isInView ? { width: 48 } : { width: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          />
           <p className={styles.description}>{description}</p>
           {children}
         </motion.div>

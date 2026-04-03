@@ -1,19 +1,20 @@
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import RegistrationForm from '@/components/RegistrationForm';
+
+export const metadata = {
+  title: 'Register — XINITY Hackathon',
+};
 
 export default function RegisterPage() {
   return (
-    <main style={{ 
-      minHeight: '100vh', 
-      display: 'flex', 
-      alignItems: 'center', 
+    <main style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
+      background: 'var(--bg-subtle)',
       position: 'relative',
-      padding: '4rem 0'
+      padding: '6rem 0 4rem',
     }}>
-      <div className="star-layer"></div>
-      
       <RegistrationForm />
     </main>
   );
