@@ -19,10 +19,10 @@ export default function Header() {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <div className={styles.logoMark}>X</div>
-          <Link href="/">
+          <div className={styles.logoGroup}>
             <span className={styles.logoText}>XINITY</span>
-          </Link>
+            <span className={styles.logoSub}>Hackathon Community</span>
+          </div>
         </div>
 
         <nav className={styles.nav}>

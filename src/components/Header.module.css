@@ -30,21 +30,14 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  margin-left: -18px;
+  margin-top: -6px;
 }
 
-.logoMark {
-  width: 24px;
-  height: 24px;
-  background: var(--accent-color);
-  border-radius: 6px;
+.logoGroup {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: white;
-  letter-spacing: -0.5px;
+  flex-direction: column;
+  gap: 0;
 }
 
 .logoText {
@@ -54,6 +47,15 @@
   letter-spacing: 0.06em;
   color: var(--text-color);
   text-decoration: none;
+  line-height: 1.1;
+}
+
+.logoSub {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  line-height: 1;
 }
 
 .nav {

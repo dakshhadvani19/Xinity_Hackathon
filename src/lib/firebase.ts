@@ -1,7 +1,7 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
-import { getAuth } from 'firebase/auth';
+import { getAuth, type Auth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 // IMPORTANT: Replace these with your actual Firebase config in a .env.local file
@@ -18,6 +18,11 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 const storage = getStorage(app);
-const auth = getAuth(app);
+
+// Auth is only safe to use in the browser
+let auth: Auth | null = null;
+if (typeof window !== 'undefined') {
+  auth = getAuth(app);
+}
 
 export { app, db, storage, auth };

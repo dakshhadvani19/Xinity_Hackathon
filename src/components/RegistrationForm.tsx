@@ -150,7 +150,7 @@ export default function RegistrationForm() {
         <div className={styles.divider}></div>
 
         <motion.div className={styles.inputGroup} variants={itemAnim}>
-          <label>Team Logo (Preferred)</label>
+          <label>Team Logo (Recommended)</label>
           <div
             className={styles.uploadZone}
             onClick={() => fileInputRef.current?.click()}
