@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { db, storage } from '../lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -72,7 +72,7 @@ export default function RegistrationForm() {
 
   if (isSuccess) {
     return (
-      <motion.div 
+      <motion.div
         className={`${styles.container} glass-card`}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -89,7 +89,7 @@ export default function RegistrationForm() {
     );
   }
 
-  const staggeredContainer = {
+  const staggeredContainer: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -97,13 +97,13 @@ export default function RegistrationForm() {
     }
   };
 
-  const itemAnim = {
+  const itemAnim: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } }
   };
 
   return (
-    <motion.div 
+    <motion.div
       className={`${styles.container} glass-card`}
       variants={staggeredContainer}
       initial="hidden"
@@ -112,14 +112,14 @@ export default function RegistrationForm() {
       <Link href="/" className={styles.backLink}>
         <ArrowLeft size={16} /> Back
       </Link>
-      
+
       <motion.div className={styles.header} variants={itemAnim}>
         <h1 className="heading-display">Register Team</h1>
         <p className={styles.subtitle}>Enter the infinite.</p>
       </motion.div>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        
+
         <motion.div className={styles.inputGroup} variants={itemAnim}>
           <label htmlFor="teamName">Team Name *</label>
           <input type="text" id="teamName" name="teamName" onChange={handleInputChange} required placeholder="e.g. VIBECoders" />
@@ -151,15 +151,15 @@ export default function RegistrationForm() {
 
         <motion.div className={styles.inputGroup} variants={itemAnim}>
           <label>Team Logo (Preferred)</label>
-          <div 
+          <div
             className={styles.uploadZone}
             onClick={() => fileInputRef.current?.click()}
           >
-            <input 
-              type="file" 
-              accept="image/*" 
-              ref={fileInputRef} 
-              style={{ display: 'none' }} 
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
               onChange={handleFileChange}
             />
             {file ? (
@@ -177,7 +177,7 @@ export default function RegistrationForm() {
           </div>
         </motion.div>
 
-        <motion.button 
+        <motion.button
           className="btn-register"
           style={{ width: '100%', marginTop: '2rem' }}
           disabled={isSubmitting}
