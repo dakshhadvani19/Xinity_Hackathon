@@ -30,7 +30,7 @@
 .logo {
   display: flex;
   align-items: center;
-  margin-left: -18px;
+  margin-left: -24px;
   margin-top: -6px;
 }
 
@@ -40,14 +40,30 @@
   gap: 0;
 }
 
-.logoText {
+.logoTextWrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  line-height: 1;
+}
+
+.logoX {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.logoIni {
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--text-color);
-  text-decoration: none;
-  line-height: 1.1;
+  line-height: 1;
+  padding-bottom: 0.1em;
 }
 
 .logoSub {
@@ -114,6 +130,11 @@
 
 /* Override .btn-secondary for nav context */
 .actions :global(.btn-secondary) {
+  padding: 8px 20px;
+  font-size: 0.88rem;
+}
+
+.actions :global(.btn-primary) {
   padding: 8px 20px;
   font-size: 0.88rem;
 }

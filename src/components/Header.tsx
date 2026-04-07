@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from './AuthProvider';
 import styles from './Header.module.css';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const { user, loading, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +22,10 @@ export default function Header() {
       <div className={styles.container}>
         <div className={styles.logo}>
           <div className={styles.logoGroup}>
-            <span className={styles.logoText}>XINITY</span>
+            <div className={styles.logoTextWrap}>
+              <span className={styles.logoX}>X</span>
+              <span className={styles.logoIni}>INITY</span>
+            </div>
             <span className={styles.logoSub}>Hackathon Community</span>
           </div>
         </div>
@@ -34,15 +39,23 @@ export default function Header() {
               <Link href="/#challenge" className={styles.navLink}>Challenge</Link>
             </li>
             <li>
-              <Link href="/#contact" className={styles.navLink}>Contact</Link>
+              <Link href="/host" className={styles.navLink}>Host</Link>
             </li>
           </ul>
         </nav>
 
         <div className={styles.actions}>
-          <Link href="/login" className="btn-secondary">
-            Log In
-          </Link>
+          {!loading && (
+            user ? (
+              <button onClick={logout} className="btn-secondary">
+                Log Out
+              </button>
+            ) : (
+              <Link href="/login" className="btn-secondary">
+                Log In
+              </Link>
+            )
+          )}
           <Link href="/register" className="btn-primary">
             Register →
           </Link>

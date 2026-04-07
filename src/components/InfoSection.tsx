@@ -11,9 +11,10 @@ interface InfoSectionProps {
   align?: 'left' | 'right';
   children?: React.ReactNode;
   illustration?: React.ReactNode;
+  wide?: boolean;
 }
 
-export default function InfoSection({ id, title, description, align = 'left', children, illustration }: InfoSectionProps) {
+export default function InfoSection({ id, title, description, align = 'left', children, illustration, wide }: InfoSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-15%' });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -38,7 +39,7 @@ export default function InfoSection({ id, title, description, align = 'left', ch
             </motion.div>
           )}
           <motion.div
-            className={`${styles.content} ${align === 'right' ? styles.contentRight : ''}`}
+            className={`${styles.content} ${align === 'right' ? styles.contentRight : ''} ${wide ? styles.contentWide : ''}`}
             initial={{ opacity: 0, x: align === 'left' ? -40 : 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: align === 'left' ? -40 : 40 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}

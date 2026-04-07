@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './Hero.module.css';
 
 const PLAIN_PART = 'Experience liftoff with the ';
-const ACCENT_PART = 'next-generation hackathon';
+const ACCENT_PART = 'next generation hackathon';
 const FULL_TYPE_TEXT = PLAIN_PART + ACCENT_PART;
 
 const SECOND_LINE =
@@ -170,8 +170,8 @@ export default function Hero() {
     };
     const onMouseLeave = () => { mouseRef.current = { x: -9999, y: -9999 }; };
 
-    window.addEventListener('resize', () => { resize(); initParticles(); });
-    canvas.addEventListener('mousemove', onMouseMove);
+    const onResize = () => { resize(); initParticles(); };
+    window.addEventListener('resize', onResize);
     document.addEventListener('mousemove', onMouseMove);
     canvas.addEventListener('mouseleave', onMouseLeave);
 
@@ -181,8 +181,7 @@ export default function Hero() {
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener('resize', resize);
-      canvas.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', onResize);
       document.removeEventListener('mousemove', onMouseMove);
       canvas.removeEventListener('mouseleave', onMouseLeave);
     };
@@ -191,7 +190,7 @@ export default function Hero() {
   return (
     <section className={styles.heroSection}>
       {/* Floating particle canvas */}
-      <canvas ref={canvasRef} className={styles.particleCanvas} />
+      <canvas ref={canvasRef} className={styles.particleCanvas} aria-hidden="true" />
 
       {/* Top brand label */}
       {/* <div className={styles.brandLabel}>

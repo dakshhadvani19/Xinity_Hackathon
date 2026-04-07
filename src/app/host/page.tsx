@@ -1,10 +1,10 @@
-import LoginForm from '@/components/LoginForm';
+import HostForm from '@/components/HostForm';
 
 export const metadata = {
-  title: 'Log In — XINITY Hackathon',
+  title: 'Host a Hackathon — XINITY',
 };
 
-export default function LoginPage() {
+export default function HostPage() {
   return (
     <main style={{
       minHeight: '100vh',
@@ -15,7 +15,7 @@ export default function LoginPage() {
       position: 'relative',
       padding: '6rem 0 4rem',
     }}>
-      <LoginForm />
+      <HostForm />
     </main>
   );
 }

@@ -1,0 +1,249 @@
+.section {
+  padding: 100px 0 80px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #ffffff 0%, #0d0f14 6%, #0d0f14 94%, #ffffff 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.accent {
+  color: var(--accent-color);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* ── Carousel Stage ── */
+.stage {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: default;
+}
+
+.stageInner {
+  position: relative;
+  width: 500px;
+  height: 400px;
+}
+
+/* ── Card Wrapper (positioned via inline transform) ── */
+.cardWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -130px;
+  margin-top: -180px;
+  width: 260px;
+  will-change: transform, filter;
+  transform-origin: center center;
+  pointer-events: auto;
+}
+
+/* ── Dark Neon Card ── */
+.card {
+  position: relative;
+  background: #13151c;
+  border-radius: 20px;
+  padding: 2.25rem 1.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+/* Animated gradient border glow behind card */
+.cardBorderGlow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 20px;
+  background: var(--card-gradient);
+  z-index: -1;
+  opacity: 0.45;
+  filter: blur(1px);
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* ── Avatar with gradient ring ── */
+.avatarRing {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--card-gradient);
+  padding: 3px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 0 20px var(--card-glow, rgba(0, 196, 180, 0.25));
+  transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+.avatarInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #1a1d28;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* ── Name ── */
+.cardName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  background: var(--card-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Post / Role ── */
+.cardPost {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.01em;
+}
+
+/* ── Community tag ── */
+.cardCommunity {
+  font-size: 0.78rem;
+  color: rgba(0, 196, 180, 0.55);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+}
+
+/* ── LinkedIn button ── */
+.linkedinBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  margin-top: 0.35rem;
+}
+
+.linkedinBtn:hover {
+  background: rgba(0, 196, 180, 0.15);
+  border-color: rgba(0, 196, 180, 0.4);
+  box-shadow: 0 0 16px rgba(0, 196, 180, 0.3);
+  transform: scale(1.1);
+}
+
+.linkedinBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .section {
+    padding: 80px 0 60px;
+  }
+
+  .stage {
+    height: 380px;
+  }
+
+  .stageInner {
+    width: 400px;
+  }
+
+  .cardWrapper {
+    width: 230px;
+    margin-left: -115px;
+  }
+
+  .card {
+    padding: 1.75rem 1.25rem 1.5rem;
+    border-radius: 16px;
+  }
+
+  .cardBorderGlow {
+    border-radius: 16px;
+  }
+
+  .avatarRing {
+    width: 76px;
+    height: 76px;
+  }
+
+  .cardName {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stage {
+    height: 360px;
+  }
+
+  .stageInner {
+    width: 300px;
+  }
+
+  .cardWrapper {
+    width: 210px;
+    margin-left: -105px;
+  }
+
+  .card {
+    padding: 1.5rem 1rem 1.25rem;
+  }
+
+  .avatarRing {
+    width: 68px;
+    height: 68px;
+  }
+
+  .cardName {
+    font-size: 0.92rem;
+  }
+
+  .cardPost {
+    font-size: 0.85rem;
+  }
+}

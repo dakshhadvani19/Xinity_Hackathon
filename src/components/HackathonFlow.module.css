@@ -1,0 +1,212 @@
+.flowSection {
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 8%, #f8f9fa 92%, #ffffff 100%);
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.accent {
+  color: var(--accent-color);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* Flow layout — horizontal on desktop, vertical on mobile */
+.flowContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: nowrap;
+}
+
+.stepGroup {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* Individual step card */
+.stepCard {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  width: 180px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+}
+
+.stepCard:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.iconCircle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.stepNumber {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-color);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.stepDesc {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  line-height: 1.45;
+}
+
+.stepIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+.stepCard:hover .stepIndicator {
+  opacity: 1;
+  width: 60px;
+}
+
+/* Arrows */
+.arrowWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  flex-shrink: 0;
+}
+
+.arrowDesktop {
+  display: block;
+}
+
+.arrowMobile {
+  display: none;
+}
+
+/* CTA button */
+.ctaWrap {
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+.detailBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-color);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 14px 36px;
+  border-radius: 100px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+}
+
+.detailBtn:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 196, 180, 0.35);
+}
+
+/* Responsive — tablet */
+@media (max-width: 1024px) {
+  .flowContainer {
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stepCard {
+    width: 160px;
+    min-height: 200px;
+    padding: 1.5rem 1.2rem;
+  }
+}
+
+/* Responsive — mobile */
+@media (max-width: 768px) {
+  .flowContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .stepGroup {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .stepCard {
+    width: 260px;
+    min-height: auto;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .arrowDesktop {
+    display: none;
+  }
+
+  .arrowMobile {
+    display: block;
+  }
+
+  .arrowWrap {
+    padding: 8px 0;
+  }
+}

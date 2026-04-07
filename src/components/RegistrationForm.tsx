@@ -2,12 +2,10 @@
 
 import { useState, useRef } from 'react';
 import { motion, Variants } from 'framer-motion';
-import { db, storage } from '../lib/firebase';
-import { collection, addDoc } from 'firebase/firestore';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { UploadCloud, CheckCircle, ArrowLeft, Loader2 } from 'lucide-react';
+import { UploadCloud, CheckCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import styles from './RegistrationForm.module.css';
+
 
 interface FormData {
   teamName: string;
@@ -26,9 +24,9 @@ export default function RegistrationForm() {
     member3: ''
   });
   const [file, setFile] = useState<File | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,32 +40,32 @@ export default function RegistrationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    try {
-      let logoUrl = '';
+    // Show success immediately — don't block the UI
+    setIsSuccess(true);
 
-      // Handle file upload if exists
-      if (file) {
-        const storageRef = ref(storage, `team_logos/${Date.now()}_${file.name}`);
-        const uploadTask = await uploadBytesResumable(storageRef, file);
-        logoUrl = await getDownloadURL(uploadTask.ref);
+    // Save to Firestore + upload logo in the background
+    (async () => {
+      try {
+        let logoUrl = '';
+        if (file) {
+          const { ref: sRef, uploadBytesResumable, getDownloadURL } = await import('firebase/storage');
+          const { storage } = await import('../lib/firebase');
+          const storageRef = sRef(storage, `team_logos/${Date.now()}_${file.name}`);
+          const uploadTask = await uploadBytesResumable(storageRef, file);
+          logoUrl = await getDownloadURL(uploadTask.ref);
+        }
+        const { collection, addDoc } = await import('firebase/firestore');
+        const { db } = await import('../lib/firebase');
+        await addDoc(collection(db, 'registrations'), {
+          ...formData,
+          teamLogo: logoUrl,
+          timestamp: new Date(),
+        });
+      } catch (error) {
+        console.error('Background registration error:', error);
       }
-
-      // Add to Firestore
-      await addDoc(collection(db, 'registrations'), {
-        ...formData,
-        teamLogo: logoUrl,
-        timestamp: new Date()
-      });
-
-      setIsSuccess(true);
-    } catch (error) {
-      console.error("Error registering team: ", error);
-      alert("Registration failed (Verify Firebase Config). See console for details.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    })();
   };
 
   if (isSuccess) {
@@ -78,7 +76,7 @@ export default function RegistrationForm() {
         animate={{ opacity: 1, scale: 1 }}
       >
         <div className={styles.successState}>
-          <CheckCircle size={64} color="#00ffff" className={styles.successIcon} />
+          <CheckCircle size={64} color="#00c4b4" className={styles.successIcon} />
           <h2 className="heading-display">Registration Complete</h2>
           <p>Welcome to the frontier, {formData.teamName}.</p>
           <Link href="/" className="btn-primary" style={{ marginTop: '2rem' }}>
@@ -164,7 +162,7 @@ export default function RegistrationForm() {
             />
             {file ? (
               <div className={styles.fileSelected}>
-                <CheckCircle size={24} color="#00ffff" />
+                <CheckCircle size={24} color="#00c4b4" />
                 <span>{file.name}</span>
               </div>
             ) : (
@@ -180,16 +178,11 @@ export default function RegistrationForm() {
         <motion.button
           className="btn-register"
           style={{ width: '100%', marginTop: '2rem' }}
-          disabled={isSubmitting}
           variants={itemAnim}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          {isSubmitting ? (
-            <div className={styles.loaderContainer}>
-              <Loader2 className={styles.spinIcon} /> Initializing...
-            </div>
-          ) : 'Submit Registration'}
+          Submit Registration
         </motion.button>
 
       </form>

@@ -14,10 +14,10 @@ const CARDS = [
     title: 'The Build',
     subtitle: 'Architect scalable solutions in 48 hours.',
     icon: Code,
-    gradient: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%)',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 60%, #93c5fd 100%)',
     flexGrow: 1.2,
     points: [
-      { icon: Palette,  text: 'Full freedom to leverage any UI framework or design system' },
+      { icon: Palette, text: 'Full freedom to leverage any UI framework or design system' },
       { icon: Sparkles, text: 'Deliver a polished, visually compelling final product' },
     ],
   },
@@ -26,13 +26,13 @@ const CARDS = [
     title: 'The Reward',
     subtitle: 'Everything you earn when you conquer.',
     icon: Trophy,
-    gradient: 'linear-gradient(135deg, #047857 0%, #059669 60%, #10b981 100%)',
+    gradient: 'linear-gradient(135deg, #10b981 0%, #34d399 60%, #6ee7b7 100%)',
     flexGrow: 1.7,
     points: [
       { icon: Rocket, text: 'Official spot on the XINITY Community Tech Team' },
-      { icon: Globe,  text: 'Get opportunity to showcase your project live on the XINITY platform' },
-      { icon: Users,  text: 'Recognition across the entire XINITY community' },
-      { icon: Award,  text: 'A certificate of achievement in your name' },
+      { icon: Globe, text: 'Get opportunity to showcase your project live on the XINITY platform' },
+      { icon: Users, text: 'Recognition across the entire XINITY community' },
+      { icon: Award, text: 'A certificate of achievement in your name' },
     ],
   },
   {
@@ -40,20 +40,20 @@ const CARDS = [
     title: 'The Pitch',
     subtitle: 'Present your vision to the judges.',
     icon: Mic,
-    gradient: 'linear-gradient(135deg, #7e22ce 0%, #a855f7 60%, #d946ef 100%)',
+    gradient: 'linear-gradient(135deg, #a855f7 0%, #c084fc 60%, #d8b4fe 100%)',
     flexGrow: 1.2,
     points: [
       { icon: Target, text: 'Present your solution directly before a live judging panel' },
-      { icon: Zap,    text: 'Drive maximum impact through confident, concise delivery' },
+      { icon: Zap, text: 'Drive maximum impact through confident, concise delivery' },
     ],
   },
 ];
 
 // Unique, non-matching float paths per position
 const FLOAT_PATHS = [
-  { y: [0, -18, -5, 14,  4, -11,  0], x: [0,  6, -3, -7,  4,  2, 0], yDur: 7.2, xDur: 9.4  },
-  { y: [0, -10,  9, -7, 16,  -8,  0], x: [0, -5,  7,  2, -6,  4, 0], yDur: 9.5, xDur: 11.8 },
-  { y: [0,  12, -16, 6,  -4, 11,  0], x: [0,  5, -2, -7,  6, -4, 0], yDur: 6.3, xDur: 8.1  },
+  { y: [0, -18, -5, 14, 4, -11, 0], x: [0, 6, -3, -7, 4, 2, 0], yDur: 7.2, xDur: 9.4 },
+  { y: [0, -10, 9, -7, 16, -8, 0], x: [0, -5, 7, 2, -6, 4, 0], yDur: 9.5, xDur: 11.8 },
+  { y: [0, 12, -16, 6, -4, 11, 0], x: [0, 5, -2, -7, 6, -4, 0], yDur: 6.3, xDur: 8.1 },
 ];
 
 export default function EventCarousel() {

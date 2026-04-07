@@ -4,9 +4,9 @@
   background: #fff;
 }
 
-/* Alternating subtle bg */
+/* Alternating subtle bg — smooth gradient fade instead of hard line */
 .sectionWrapper:nth-of-type(even) {
-  background: var(--bg-subtle);
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 10%, #f8f9fa 90%, #ffffff 100%);
 }
 
 .container {
@@ -68,6 +68,11 @@
 
 .contentRight {
   align-self: flex-end;
+  margin-left: auto;
+}
+
+.contentWide {
+  max-width: 1140px;
 }
 
 .title {
@@ -124,6 +129,10 @@
 @media (max-width: 768px) {
   .content {
     padding: 2rem;
+  }
+
+  .contentWide {
+    max-width: 100%;
   }
 
   .title {

@@ -2,9 +2,7 @@
   min-height: 60vh;
   display: flex;
   align-items: center;
-  background: var(--bg-subtle);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 10%, #f8f9fa 90%, #ffffff 100%);
 }
 
 .sectionInner {
@@ -48,7 +46,7 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
   position: relative;
   will-change: transform;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 /* Center card (The Reward) — taller and pushed lower; side cards share the same baseline */

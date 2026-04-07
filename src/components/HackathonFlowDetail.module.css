@@ -1,0 +1,437 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding-top: 80px;
+  /* below fixed header */
+}
+
+/* Back nav */
+.backNav {
+  padding: 1.5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--accent-color);
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 2rem 2rem 4rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heroContent {
+  margin-bottom: 3rem;
+}
+
+.heroBadge {
+  display: inline-block;
+  background: rgba(0, 196, 180, 0.1);
+  color: var(--accent-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(0, 196, 180, 0.2);
+}
+
+.heroTitle {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.08;
+  margin-bottom: 1.25rem;
+}
+
+.heroAccent {
+  color: var(--accent-color);
+}
+
+.heroSubtitle {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Progress bar */
+.progressBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.progressStep {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progressDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.progressLabel {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Timeline section */
+.timelineSection {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+.timeline {
+  position: relative;
+}
+
+/* Phase row — each step */
+.phaseRow {
+  display: flex;
+  gap: 2.5rem;
+  position: relative;
+  margin-bottom: 0;
+}
+
+/* Timeline column (dot + line) */
+.timelineCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  position: relative;
+}
+
+.timelineDot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.timelineDotNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.timelineLine {
+  width: 2px;
+  flex: 1;
+  background: var(--border-color);
+  transform-origin: top;
+  min-height: 40px;
+}
+
+/* Phase card */
+.phaseCard {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phaseCard:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+.cardLeft,
+.cardRight {
+  /* On desktop we could alternate sides, but column layout works cleaner */
+}
+
+/* Card header */
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTimeline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.15rem;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--text-color);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.15rem;
+}
+
+.cardTagline {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* Description */
+.cardDesc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+/* Checklist */
+.cardChecklist {
+  margin-bottom: 1.5rem;
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+}
+
+.checklistTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.checklistItems {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Pro tips */
+.tipsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tipsTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+
+.tipRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tipIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tipText {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* Accent bar at bottom of card */
+.accentBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+/* Bottom CTA */
+.bottomCta {
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 10%, #f8f9fa 90%, #ffffff 100%);
+  padding: 100px 24px;
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  margin-bottom: 1.25rem;
+  line-height: 1.1;
+}
+
+.ctaDesc {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  line-height: 1.65;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    padding-top: 70px;
+  }
+
+  .hero {
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+
+  .progressBar {
+    gap: 1rem;
+  }
+
+  .progressLabel {
+    display: none;
+  }
+
+  .progressDot {
+    width: 14px;
+    height: 14px;
+  }
+
+  .timelineSection {
+    padding: 0 1rem 3rem;
+  }
+
+  .phaseRow {
+    gap: 1rem;
+  }
+
+  .timelineCol {
+    width: 36px;
+  }
+
+  .timelineDot {
+    width: 36px;
+    height: 36px;
+  }
+
+  .timelineDotNum {
+    font-size: 0.9rem;
+  }
+
+  .phaseCard {
+    padding: 1.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cardIcon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+
+  .cardChecklist {
+    padding: 1rem 1.25rem;
+  }
+
+  .backNav {
+    padding: 1rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .phaseRow {
+    gap: 0.75rem;
+  }
+
+  .timelineCol {
+    width: 28px;
+  }
+
+  .timelineDot {
+    width: 28px;
+    height: 28px;
+  }
+
+  .timelineDotNum {
+    font-size: 0.75rem;
+  }
+
+  .phaseCard {
+    padding: 1.5rem 1rem;
+  }
+}
